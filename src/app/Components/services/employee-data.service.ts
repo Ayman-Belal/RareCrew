@@ -20,13 +20,11 @@ export class EmployeeDataService {
      // rxjs
      if(!this.data$){
       this.data$ = this.http.get<IEmployee[]>(this.baseUrl).pipe(
-        //
         catchError((error) => {
           console.log('An error occurred:', error);
           return throwError('Something went wrong');
         }),
         map((items:IEmployee[])=>{
-  
         const result_items: { [name:string]: IEmployee [] } = {}
         items.forEach(item=>{
           const name = item.EmployeeName  as string
@@ -36,7 +34,6 @@ export class EmployeeDataService {
             result_items[name] = [item];
           }
         })
-  
             for(let key in result_items){
                   const items = result_items[key]
                   // cons
@@ -45,8 +42,7 @@ export class EmployeeDataService {
                   items.forEach(item=>{
                     const attendacePerDay = new Date(item.EndTimeUtc).getTime()  - new Date ( item.StarTimeUtc).getTime();
                     timeMiliSec += attendacePerDay; // 100
-                    
-                  
+
               })
   
               this.employees.push({
@@ -54,18 +50,9 @@ export class EmployeeDataService {
                 timeHours: Math.round( timeMiliSec / (1000 * 60 *60))
               })
               this.employees.sort((a,b)=>b.timeHours-a.timeHours);
-  
-  
+
             }
-         
-            return this.employees.map(item=>{
-              return {
-               
-                EmployeeName: item.EmployeeName,
-                timeHours: item.timeHours,
-               
-              }
-            })
+           return this.employees;
           }),share()
       )//END OF pip FUNCTION
         
