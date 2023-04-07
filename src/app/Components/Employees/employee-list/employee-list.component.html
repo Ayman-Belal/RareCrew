@@ -1,0 +1,16 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Total time worked</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of employees " [style.background-color]="isLessThan100Hours(employee) ? 'red' : ''">
+                <td>{{employee.EmployeeName}}</td>
+                <td>{{employee.timeHours}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
